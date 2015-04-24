@@ -37,10 +37,7 @@ def dump_json_list(sat_connection, sat_auth, groups):
 
 
 if __name__ == "__main__":
-    conf_path = os.path.join(self_dir, '..', 'satelans.ini')
-    if not os.path.exists(conf_path):
-        conf_path = os.path.join(self_dir, 'satelans.ini')
-
+    conf_path = os.path.join(self_dir, 'satelans.ini')
     config = get_config(conf_path)
 
     auth, connection = satellite_helpers.create_connection(
