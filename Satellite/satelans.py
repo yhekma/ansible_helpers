@@ -5,7 +5,9 @@ import os
 import ConfigParser
 import json
 import shlex
-from libs import sat_helpers
+self_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(self_dir, '..'))
+from libs import satellite_helpers
 
 
 def get_config(conf_file):
@@ -35,9 +37,8 @@ def dump_json_list(sat_connection, sat_auth, groups):
 
 
 if __name__ == "__main__":
-    self_dir = os.path.dirname(os.path.abspath(__file__))
     config = get_config("%s/satelans.ini" % self_dir)
-    auth, connection = sat_helpers.create_connection(
+    auth, connection = satellite_helpers.create_connection(
         url=config['url'],
         username=config['username'],
         password=config['password'],
