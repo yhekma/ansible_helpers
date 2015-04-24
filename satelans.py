@@ -36,7 +36,7 @@ def dump_json_list(sat_connection, groups):
 
 if __name__ == "__main__":
     self_dir = os.path.dirname(os.path.abspath(__file__))
-    config = get_config("%s/satelans.ini")
+    config = get_config("%s/satelans.ini" % self_dir)
     connection = sat_helpers.create_connection(
         url=config['url'],
         username=config['username'],
