@@ -19,12 +19,12 @@ def get_config(conf_file):
     }
 
 
-def dump_json_list(sat_connection, groups):
+def dump_json_list(sat_connection, sat_auth, groups):
     result = {'_meta': {'hostvars': dict()}}
 
     for group in groups:
         hosts = [i['name'] for i in
-                 sat_connection.satServer.systemgroup.listSystemsMinimal(sat_connection.satAuth, group)]
+                 sat_connection.systemgroup.listSystemsMinimal(sat_auth, group)]
         result[group] = {
             'hosts': hosts,
         }
@@ -37,7 +37,7 @@ def dump_json_list(sat_connection, groups):
 if __name__ == "__main__":
     self_dir = os.path.dirname(os.path.abspath(__file__))
     config = get_config("%s/satelans.ini" % self_dir)
-    connection = sat_helpers.create_connection(
+    auth, connection = sat_helpers.create_connection(
         url=config['url'],
         username=config['username'],
         password=config['password'],
@@ -47,5 +47,5 @@ if __name__ == "__main__":
         print {}
         sys.exit()
     if sys.argv[1] == '--list':
-        dump_json_list(connection, config['groups'])
+        dump_json_list(connection, auth, config['groups'])
         sys.exit()

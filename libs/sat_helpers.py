@@ -10,4 +10,5 @@ def getserver():
 
 def create_connection(url, username, password, verbose=0):
     server_con = xmlrpclib.ServerProxy(uri=url, verbose=verbose)
-    return server_con.auth.login(username, password)
+    auth = server_con.auth.login(username, password)
+    return auth, server_con
