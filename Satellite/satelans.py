@@ -7,7 +7,7 @@ import json
 import shlex
 self_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(self_dir, '..'))
-from libs import satellite_helpers
+from ansible_helpers_libs import satellite_helpers
 
 
 def get_config(conf_file):
@@ -37,7 +37,12 @@ def dump_json_list(sat_connection, sat_auth, groups):
 
 
 if __name__ == "__main__":
-    config = get_config("%s/satelans.ini" % self_dir)
+    conf_path = os.path.join(self_dir, '..', 'satelans.ini')
+    if not os.path.exists(conf_path):
+        conf_path = os.path.join(self_dir, 'satelans.ini')
+
+    config = get_config(conf_path)
+
     auth, connection = satellite_helpers.create_connection(
         url=config['url'],
         username=config['username'],
