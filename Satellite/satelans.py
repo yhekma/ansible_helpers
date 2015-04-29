@@ -21,7 +21,7 @@ def get_config(conf_file):
     }
 
 
-def get_json_list(sat_connection, sat_auth, groups):
+def get_json(sat_connection, sat_auth, groups):
     result = {'_meta': {'hostvars': dict()}}
 
     for group in groups:
@@ -50,5 +50,5 @@ if __name__ == "__main__":
         print {}
         sys.exit()
     if sys.argv[1] == '--list':
-        print get_json_list(connection, auth, config['groups'])
+        print get_json(connection, auth, config['groups'])
         sys.exit()
