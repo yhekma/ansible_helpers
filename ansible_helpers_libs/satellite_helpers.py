@@ -1,4 +1,7 @@
 import re
+import ConfigParser
+import shlex
+import os
 import json
 import xmlrpclib
 
@@ -28,3 +31,19 @@ def get_json(sat_connection, sat_auth, groups):
         for host in hosts:
             result['_meta']['hostvars'][host] = {}
     return json.dumps(result)
+
+
+def get_config(conf_file=None):
+    if not conf_file:
+        conf_file = os.getenv('SATELANS_CONFIG')
+
+    conf_obj = ConfigParser.RawConfigParser()
+    conf_obj.read(conf_file)
+    return {
+        'url': conf_obj.get('main', 'url'),
+        'username': conf_obj.get('main', 'username'),
+        'password': conf_obj.get('main', 'password'),
+        'groups': shlex.split(conf_obj.get('main', 'groups')),
+        }
+
+
