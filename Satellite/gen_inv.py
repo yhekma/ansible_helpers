@@ -20,7 +20,7 @@ parser.add_argument('-c', '--config',
 parser.add_argument('-g', '--group', help='Which Satellite group(s) to query. Multiples can be comma-seperated.')
 parser.add_argument('-s', '--section', help='Name of the Ansible section to generate.')
 args = parser.parse_args()
-groups = args.group(',')
+groups = args.group.split(',')
 
 config = get_config(args.config)
 auth, connection = create_connection(
@@ -32,7 +32,7 @@ auth, connection = create_connection(
 print '[%s]' % args.section
 for group in groups:
     try:
-        hosts_dict = json.loads(get_json(connection, auth, group))
+        hosts_dict = json.loads(get_json(connection, auth, [group]))
         hosts = hosts_dict[group]['hosts']
         print '%s' % ('\n'.join(hosts))
     except xmlrpclib.Fault:
