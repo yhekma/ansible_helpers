@@ -21,8 +21,12 @@ def get_config(conf_file):
 
 
 if __name__ == "__main__":
-    conf_path = os.path.join(self_dir, 'satelans.ini')
+    conf_path = os.getenv('SATELANS_CONFIG')
     config = get_config(conf_path)
+
+    if not config:
+        conf_path = os.path.join(self_dir, 'satelans.ini')
+        config = get_config(conf_path)
 
     auth, connection = satellite_helpers.create_connection(
         url=config['url'],
