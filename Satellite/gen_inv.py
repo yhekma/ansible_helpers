@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
 import sys
-import argparse
 import os
 import json
 self_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(self_dir, '..'))
 from ansible_helpers_libs.satellite_helpers import get_json, get_config, create_connection
+try:
+    import argparse
+except ImportError:
+    import ansible_helpers_libs.argparse_local as argparse
 
 
 def main(c_auth, conn, group, section):
