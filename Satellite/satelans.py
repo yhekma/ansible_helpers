@@ -3,7 +3,6 @@
 import sys
 import os
 import ConfigParser
-import json
 import shlex
 self_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(self_dir, '..'))
@@ -21,21 +20,6 @@ def get_config(conf_file):
     }
 
 
-def get_json(sat_connection, sat_auth, groups):
-    result = {'_meta': {'hostvars': dict()}}
-
-    for group in groups:
-        hosts = [i['name'] for i in
-                 sat_connection.systemgroup.listSystemsMinimal(sat_auth, group)]
-        result[group] = {
-            'hosts': hosts,
-        }
-
-        for host in hosts:
-            result['_meta']['hostvars'][host] = {}
-    return json.dumps(result)
-
-
 if __name__ == "__main__":
     conf_path = os.path.join(self_dir, 'satelans.ini')
     config = get_config(conf_path)
@@ -50,5 +34,5 @@ if __name__ == "__main__":
         print {}
         sys.exit()
     if sys.argv[1] == '--list':
-        print get_json(connection, auth, config['groups'])
+        print satellite_helpers.get_json(connection, auth, config['groups'])
         sys.exit()
