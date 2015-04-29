@@ -3,8 +3,7 @@
 import sys
 import os
 self_dir = os.path.dirname(os.path.abspath(__file__))
-# noinspection PyArgumentList
-sys.path.insert(os.path.join(self_dir, '..'))
+sys.path.insert(0, os.path.join(self_dir, '..'))
 from ansible_helpers_libs import satellite_helpers
 
 
